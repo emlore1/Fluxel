@@ -1,0 +1,72 @@
+{
+  "name": "fluxel",
+  "description": "A visual, node-based image-processing studio.",
+  "private": true,
+  "license": "MIT",
+  "version": "1.8.0",
+  "type": "module",
+  "main": "electron/bootstrap.cjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "desktop": "npm run build && electron .",
+    "desktop:dev": "concurrently --kill-others-on-fail \"vite --host 127.0.0.1\" \"wait-on http-get://127.0.0.1:5173 && cross-env VITE_DEV_SERVER_URL=http://127.0.0.1:5173 electron .\"",
+    "desktop:pack": "npm run build && electron-builder --dir",
+    "desktop:dist": "npm run build && electron-builder",
+    "desktop:dist:win": "npm run build && electron-builder --win zip --x64",
+    "test": "npm run build && npm run test:worker && npm run test:workflow && npm run test:persistence && npm run test:preview && npm run test:controls && npm run test:edges && npm run test:image-drop && npm run test:export && npm run test:desktop && npm run test:ai",
+    "test:ai": "node tests/ai-pack-tests.cjs && node tests/realesrgan-scale-tests.mjs && node tests/depth-anything-tests.mjs && node tests/hidream-worker-tests.mjs",
+    "test:desktop": "node tests/desktop-tests.cjs",
+    "test:export": "node tests/export-tests.cjs",
+    "test:image-drop": "node tests/image-drop-tests.cjs",
+    "test:worker": "node tests/worker-pixel-tests.cjs",
+    "test:workflow": "node tests/batch-folder-tests.mjs",
+    "test:persistence": "node tests/persistence-tests.cjs",
+    "test:preview": "node tests/preview-tests.cjs",
+    "test:controls": "node tests/project-controls-tests.cjs",
+    "test:edges": "node tests/edge-insertion-tests.cjs"
+  },
+  "devDependencies": {
+    "@emotion/is-prop-valid": "^1.4.0",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.0.0",
+    "electron": "^43.3.0",
+    "electron-builder": "^26.0.12",
+    "vite": "^6.4.3",
+    "wait-on": "^8.0.4"
+  },
+  "build": {
+    "appId": "com.fluxel.studio",
+    "productName": "Fluxel",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "python/**/*",
+      "build/icon.png",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "python/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.graphics-design"
+    },
+    "win": {
+      "target": "zip",
+      "signAndEditExecutable": false
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Graphics",
+      "icon": "build/icon.png"
+    }
+  },
+  "dependencies": {
+    "onnxruntime-node": "^1.22.0"
+  }
+}
