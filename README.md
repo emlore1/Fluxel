@@ -4,6 +4,8 @@ Fluxel is a desktop and browser-based visual image-processing studio. Build a ty
 
 The v21 interface uses Fluxel's original Orbit desk visual system: detached rounded work surfaces, a neutral-black canvas, capsule navigation, vertically accented node tiles, a card-based inspector, and a floating output monitor. Its default accent is `#5e0094`.
 
+**About this repo's source.** The Electron shell, the IPC layer, and the entire Python-based AI runtime (`electron/`, `python/`) are full, editable source and are what this project is actually about. The UI itself (`main.js`) ships as an already-built bundle rather than individual component files — there is no `src/` tree behind it in this repo, so it can be read and patched in place but not rebuilt from scratch here. It's compiled from React, React Flow, Zustand, and Framer Motion; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for attribution.
+
 ## Run locally
 
 ```bash
@@ -15,7 +17,7 @@ Create the static production build with `npm run build`. Run deterministic tests
 
 ## Desktop
 
-Run `npm run desktop:dev` while developing, `npm test` for the complete test suite, or `npm run desktop:dist:win` to build the portable Windows ZIP.
+Run `npm run desktop:dev` while developing, `npm test` for the complete test suite, or `npm run desktop:dist:win` to build the portable Windows `.exe`.
 
 ## Local AI
 
@@ -116,4 +118,4 @@ See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for runtime and model licen
 
 ## Tech
 
-React, TypeScript, Vite, React Flow, Zustand, Framer Motion, CSS variables, Canvas API, Web Workers, and Electron.
+React, TypeScript, Vite, React Flow, Zustand, Framer Motion, CSS variables, Canvas API, Web Workers, and Electron. The UI ships pre-built (see "About this repo's source" above); the Electron shell and the Python AI runtime are the buildable part of this repo.

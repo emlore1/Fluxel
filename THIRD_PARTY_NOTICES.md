@@ -1,5 +1,35 @@
 # Third-party notices
 
+## Bundled in the application
+
+The following libraries are compiled directly into `main.js` and ship inside every Fluxel build.
+
+### React
+
+Copyright Meta Platforms, Inc. and affiliates.
+
+Licensed under the MIT License. Source and license: https://github.com/facebook/react
+
+### React Flow
+
+Copyright webkid GmbH
+
+Licensed under the MIT License. Source and license: https://github.com/xyflow/xyflow
+
+### Zustand
+
+Copyright Paul Henschel
+
+Licensed under the MIT License. Source and license: https://github.com/pmndrs/zustand
+
+### Framer Motion
+
+Copyright Framer B.V.
+
+Licensed under the MIT License. Source and license: https://github.com/motiondivision/motion
+
+## Optional runtime downloads
+
 Fluxel can optionally download and run the official portable Real-ESRGAN NCNN/Vulkan package. The package is not bundled into the Fluxel application archive.
 
 ## Real-ESRGAN
