@@ -6,13 +6,13 @@ All notable changes to Fluxel, newest first.
 
 Adds **AI Generate** and **AI Edit**, both running HiDream-O1-Image locally on the GPU.
 
-- **AI Generate** builds an image from a text prompt. It is a source node — no input required — so it can head a graph like Load Image. Fixed seeds are reproducible and increment across folder-batch runs.
+- **AI Generate** builds an image from a text prompt. It is a source node (no input required), so it can head a graph like Load Image. Fixed seeds are reproducible and increment across folder-batch runs.
 - **AI Edit** takes an image plus a plain-language instruction (*"remove the car"*, *"make it snow"*) and applies it to the whole frame, with no mask to paint. Paint Mask remains a utility node; mask-scoped editing is planned for later.
 - Output size comes from a fixed table the model picks by aspect ratio, so the node lists those eleven sizes rather than a width and height it would discard. Steps, guidance, and shift are pinned to the values the checkpoint was tuned for, and the pipeline takes no negative prompt.
-- The pack provisions its own runtime on first install: standalone CPython, a CUDA build of PyTorch, a matching flash-attention wheel, the upstream `models` package, and the checkpoint. No system Python, pip, CUDA toolkit, git, or `huggingface_hub` required — just a current NVIDIA driver. Everything is checksum-verified and resumable, and nothing ships inside the installer.
+- The pack provisions its own runtime on first install: standalone CPython, a CUDA build of PyTorch, a matching flash-attention wheel, the upstream `models` package, and the checkpoint. No system Python, pip, CUDA toolkit, git, or `huggingface_hub` required, just a current NVIDIA driver. Everything is checksum-verified and resumable, and nothing ships inside the installer.
 - Weights are FP8, keeping VRAM near 10 GB. Since torch won't mix FP8 with BF16 activations, each linear layer dequantises as it runs. Generation happens in a warm worker reused between runs and released after ten idle minutes, so only the first image of a session waits on the model load. The worker runs fully offline and excludes the upstream prompt agent, which would send prompts to a hosted LLM.
 
-**Requirements and limits.** NVIDIA CUDA GPU, ~10 GB VRAM, Windows only — unlike the Vulkan and DirectML packs. If no flash-attention wheel matches the installed torch, the pipeline falls back to masked attention automatically; images still generate but fine texture suffers. The distilled FP8 checkpoint also trades some fidelity for speed, most visible when editing photos.
+**Requirements and limits.** NVIDIA CUDA GPU, ~10 GB VRAM, Windows only, unlike the Vulkan and DirectML packs. If no flash-attention wheel matches the installed torch, the pipeline falls back to masked attention automatically; images still generate but fine texture suffers. The distilled FP8 checkpoint also trades some fidelity for speed, most visible when editing photos.
 
 ## 1.6.1
 
